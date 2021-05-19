@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+import asyncpg
 import sys
 import os
 import aiohttp
@@ -38,6 +39,18 @@ class AnimeBotBeta(commands.Bot):
             "User-Agent": f"python-requests/2.25.1 The Anime Bot Beta/1.1.0 Python/{sys.version_info[0]}.{sys.version_info[1]}.{sys.version_info[2]} aiohttp/{aiohttp.__version__}"
         },
     )
+        db = self.loop.run_until_complete(
+            asyncpg.create_pool(
+                host="localhost",
+                port="5432",
+                user="postgres1",
+                password="postgres",
+                database="animebotbeta",
+                min_size=10,
+                max_size=20,
+            )
+        )
+        self.db = db
         for file in os.listdir("./cogs"):
             if file.endswith(".py"):
                 self.load_extension(f"cogs.{file[:-3]}")
