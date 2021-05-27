@@ -39,10 +39,10 @@ class Buttons(commands.Cog):
     @commands.command()
     async def roo(self, ctx):
         r = RooView()
-        e = [str(i) for i in self.bot.emojis if i.name.startswith("roo")][25:]
+        e = [str(i) for i in self.bot.emojis if i.name.startswith("roo")][:25]
         for i in e:
             r.add_item(RooButton(emoji=i, style=discord.ButtonStyle.primary, label="\u200b"))
-        m = await ctx.send(content="get your roo", view=b)
+        m = await ctx.send(content="get your roo", view=r)
 
     @commands.command()
     async def bobo(self, ctx):
