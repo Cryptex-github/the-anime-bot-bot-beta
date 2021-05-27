@@ -41,7 +41,7 @@ class Buttons(commands.Cog):
         r = RooView()
         e = [str(i) for i in self.bot.emojis if i.name.startswith("roo")][25:]
         for i in e:
-            r.add_item(RooButton(emoji=i))
+            r.add_item(RooButton(emoji=i, style=discord.ButtonStyle.primary, label="\u200b"))
         m = await ctx.send(content="get your roo", view=b)
 
     @commands.command()
