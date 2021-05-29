@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-from datetime import datetime
 
 from discord import ui
 
@@ -9,7 +8,7 @@ class SpeedClickButton(ui.Button):
         super().__init__(*args, **kwargs)
     
     async def callback(self, interaction):
-        e = datetime.utcnow()
+        e = discord.utils.utcnow()
         self.view.stop()
         f = e - interaction.message.created_at
         await interaction.message.edit(content=f"{interaction.user} won. They clicked the button within {f.total_seconds()} seconds")
