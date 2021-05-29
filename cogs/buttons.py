@@ -1,7 +1,19 @@
 import discord
 from discord.ext import commands
+from datetime import datetime
 
 from discord import ui
+
+class SpeedClickButton(ui.Button):
+    def __init__(self, *aegs, **kwargs):
+        super().__init__(*args, **kwargs)
+    
+    async def callback(self, interaction):
+        e = datetime.utcnow()
+        self.view.stop()
+        f = e - interaction.message.created_at
+        await interaction.message.edit(content=f"{interaction.user} won. They clicked the button within {f.total_seconds()} seconds")
+
 
 class RooView(ui.View):
     def __init__(self, *args, **kwargs):
@@ -35,6 +47,12 @@ class BoboButton(ui.Button):
 class Buttons(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+    
+    @commands.command()
+    async def click(self, ctx):
+        v = ui.View()
+        v.add_item(SpeedClickButton(style=discord.ButtonStyle.primary, label="Click as fast as you can"))
+        await ctx.send("Click the button as fast as you can")
 
     @commands.command()
     async def roo(self, ctx):
