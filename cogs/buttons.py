@@ -5,7 +5,7 @@ from datetime import datetime
 from discord import ui
 
 class SpeedClickButton(ui.Button):
-    def __init__(self, *aegs, **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
     
     async def callback(self, interaction):
