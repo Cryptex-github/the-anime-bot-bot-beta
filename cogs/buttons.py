@@ -52,7 +52,7 @@ class Buttons(commands.Cog):
     async def click(self, ctx):
         v = ui.View()
         v.add_item(SpeedClickButton(style=discord.ButtonStyle.primary, label="Click as fast as you can"))
-        await ctx.send("Click the button as fast as you can")
+        await ctx.send("Click the button as fast as you can", view=v)
 
     @commands.command()
     async def roo(self, ctx):
