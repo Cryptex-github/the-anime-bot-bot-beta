@@ -12,7 +12,7 @@ class SpeedClickButton(ui.Button):
         self.view.stop()
         f = e - interaction.message.created_at
         self.disabled = True
-        await interaction.response.edit_message(content=f"{interaction.user} won. They clicked the button within {f.total_seconds()} seconds", view=self)
+        await interaction.response.edit_message(content=f"{interaction.user} won. They clicked the button within {f.total_seconds()} seconds", view=self.view)
 
 
 class RooView(ui.View):
