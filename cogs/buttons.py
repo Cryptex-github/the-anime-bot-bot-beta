@@ -11,7 +11,8 @@ class SpeedClickButton(ui.Button):
         e = discord.utils.utcnow()
         self.view.stop()
         f = e - interaction.message.created_at
-        await interaction.message.edit(content=f"{interaction.user} won. They clicked the button within {f.total_seconds()} seconds")
+        self.disabled = True
+        await interaction.response.edit_message(content=f"{interaction.user} won. They clicked the button within {f.total_seconds()} seconds", view=self)
 
 
 class RooView(ui.View):
@@ -25,7 +26,7 @@ class RooButton(ui.Button):
     
     async def callback(self, interaction):
         self.view.counter += 1
-        await interaction.message.edit(content=f"get your roo: total roo collected: {self.view.counter}")
+        await interaction.response.edit_message(content=f"get your roo: total roo collected: {self.view.counter}")
         await interaction.response.send_message(content=f"{interaction.user} got a {str(self.emoji)}", ephemeral=True)
 
 class BoboView(ui.View):
@@ -39,7 +40,7 @@ class BoboButton(ui.Button):
     
     async def callback(self, interaction):
         self.view.counter += 1
-        await interaction.message.edit(content=f"get your bobo: total bobo collected: {self.view.counter}")
+        await interaction.response.edit_message(content=f"get your bobo: total bobo collected: {self.view.counter}")
         await interaction.response.send_message(content=f"{interaction.user} got a {self.custom_id}", ephemeral=True)
 
 
