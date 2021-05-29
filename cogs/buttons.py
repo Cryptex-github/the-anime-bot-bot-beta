@@ -1,7 +1,13 @@
 import discord
 from discord.ext import commands
+import random
 
 from discord import ui
+
+class SpeedClickView(ui.View):
+    def __init__(self, color, *args, **kwargs):
+        self.color = color
+        super().__init__(*args, **kwargs)
 
 class SpeedClickButton(ui.Button):
     def __init__(self, *args, **kwargs):
@@ -9,10 +15,13 @@ class SpeedClickButton(ui.Button):
     
     async def callback(self, interaction):
         e = discord.utils.utcnow()
+        if self.custom_id != self.view.color:
+            return await interaction.response.send_message(content=f"Wrong color", ephemeral=True)
         self.view.stop()
         f = e - interaction.message.created_at
-        self.disabled = True
-        await interaction.response.edit_message(content=f"{interaction.user} won. They clicked the button within {f.total_seconds()} seconds", view=self.view)
+        for button in self.view.children:
+            button.disabled = True
+        await interaction.response.edit_message(content=f"{interaction.user} won. They clicked the {self.view.color} button within {f.total_seconds()} seconds", view=self.view)
 
 
 class RooView(ui.View):
@@ -50,9 +59,12 @@ class Buttons(commands.Cog):
     
     @commands.command()
     async def click(self, ctx):
-        v = ui.View()
-        v.add_item(SpeedClickButton(style=discord.ButtonStyle.primary, label="Click as fast as you can"))
-        await ctx.send("Click the button as fast as you can", view=v)
+        colors = ["blurple", "grey", "green", "red"]
+        color = random.choice(colors)
+        v = SpeedClickView(color)
+        for i in colors:
+            v.add_item(SpeedClickButton(style=getattr(discord.ButtonStyle, i), label=i, custom_id=i))
+        await ctx.send(f"Click the button that is {color}", view=v)
 
     @commands.command()
     async def roo(self, ctx):
