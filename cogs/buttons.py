@@ -9,7 +9,6 @@ class SpeedClickButton(ui.Button):
     
     async def callback(self, interaction):
         e = discord.utils.utcnow()
-        self.view.stop()
         f = e - interaction.message.created_at
         self.disabled = True
         await interaction.response.edit_message(content=f"{interaction.user} won. They clicked the button within {f.total_seconds()} seconds", view=self.view)
