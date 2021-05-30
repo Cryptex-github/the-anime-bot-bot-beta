@@ -59,7 +59,7 @@ class Buttons(commands.Cog):
     
     @commands.command()
     async def click(self, ctx):
-        colors = ["blurple", "grey", "green", "red"]
+        colors = {"blurple", "grey", "green", "red"}
         color = random.choice(colors)
         v = SpeedClickView(color)
         for i in colors:
