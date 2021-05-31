@@ -7,6 +7,7 @@ from discord import ui
 class SpeedClickView(ui.View):
     def __init__(self, color, *args, **kwargs):
         self.color = color
+        self.clicked = False
         super().__init__(*args, **kwargs)
 
 class SpeedClickButton(ui.Button):
@@ -15,13 +16,19 @@ class SpeedClickButton(ui.Button):
     
     async def callback(self, interaction):
         e = discord.utils.utcnow()
-        if self.custom_id != self.view.color:
-            return await interaction.response.send_message(content=f"Wrong color", ephemeral=True)
-        self.view.stop()
-        f = e - interaction.message.created_at
-        for button in self.view.children:
-            button.disabled = True
-        await interaction.response.edit_message(content=f"{interaction.user} won. They clicked the {self.view.color} button within {f.total_seconds()} seconds", view=self.view)
+        if self.view.clicked:
+            return
+        self.view.clicked = True
+        try:
+            if self.custom_id != self.view.color:
+                return await interaction.response.send_message(content=f"Wrong color", ephemeral=True)
+            f = e - interaction.message.created_at
+            for button in self.view.children:
+                button.disabled = True
+            await interaction.response.edit_message(content=f"{interaction.user} won. They clicked the {self.view.color} button within {f.total_seconds()} seconds", view=self.view)
+            self.view.stop()
+        except:
+            self.view.clicked = False
 
 
 class RooView(ui.View):
