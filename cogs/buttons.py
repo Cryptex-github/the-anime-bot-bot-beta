@@ -27,7 +27,7 @@ class SpeedClickButton(ui.Button):
                 button.disabled = True
             await interaction.response.edit_message(content=f"{interaction.user} won. They clicked the {self.view.color} button within {f.total_seconds()} seconds", view=self.view)
             self.view.stop()
-        except:
+        finally:
             self.view.clicked = False
 
 
