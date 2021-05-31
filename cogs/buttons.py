@@ -164,7 +164,7 @@ class Buttons(commands.Cog):
         self.bot = bot
     
     @commands.command()
-    async def ttt(ctx):
+    async def ttt(self, ctx):
         await ctx.send('Tic Tac Toe: X goes first', view=TicTacToe())
     
     @commands.command()
