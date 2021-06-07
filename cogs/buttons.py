@@ -164,10 +164,12 @@ class Buttons(commands.Cog):
         self.bot = bot
     
     @commands.command()
+    @commands.max_concurrency(1, commands.BucketType.channel)
     async def ttt(self, ctx):
         await ctx.send('Tic Tac Toe: X goes first', view=TicTacToe())
     
     @commands.command()
+    @commands.max_concurrency(1, commands.BucketType.channel)
     async def click(self, ctx):
         colors = ["blurple", "grey", "green", "red"]
         random.shuffle(colors)
@@ -178,6 +180,7 @@ class Buttons(commands.Cog):
         await ctx.send(f"Click the button that is {color}", view=v)
 
     @commands.command()
+    @commands.max_concurrency(1, commands.BucketType.channel)
     async def roo(self, ctx):
         r = RooView()
         e = [str(i) for i in self.bot.emojis if i.name.startswith("roo")][:25]
@@ -186,6 +189,7 @@ class Buttons(commands.Cog):
         m = await ctx.send(content="get your roo", view=r)
 
     @commands.command()
+    @commands.max_concurrency(1, commands.BucketType.channel)
     async def bobo(self, ctx):
         b = BoboView()
         b.add_item(BoboButton(style=discord.ButtonStyle.primary, custom_id="bobo", label="bobo"))
