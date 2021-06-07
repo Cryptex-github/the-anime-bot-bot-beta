@@ -166,7 +166,9 @@ class Buttons(commands.Cog):
     @commands.command()
     @commands.max_concurrency(1, commands.BucketType.channel)
     async def ttt(self, ctx):
-        await ctx.send('Tic Tac Toe: X goes first', view=TicTacToe())
+        v = TicTacToe()
+        await ctx.send('Tic Tac Toe: X goes first', view=v)
+        await v.wait()
     
     @commands.command()
     @commands.max_concurrency(1, commands.BucketType.channel)
@@ -178,6 +180,7 @@ class Buttons(commands.Cog):
         for i in colors:
             v.add_item(SpeedClickButton(style=getattr(discord.ButtonStyle, i), label=i, custom_id=i))
         await ctx.send(f"Click the button that is {color}", view=v)
+        await v.wait()
 
     @commands.command()
     @commands.max_concurrency(1, commands.BucketType.channel)
@@ -187,6 +190,7 @@ class Buttons(commands.Cog):
         for i in e:
             r.add_item(RooButton(emoji=i, style=discord.ButtonStyle.primary, label="\u200b"))
         m = await ctx.send(content="get your roo", view=r)
+        await r.wait()
 
     @commands.command()
     @commands.max_concurrency(1, commands.BucketType.channel)
@@ -197,6 +201,7 @@ class Buttons(commands.Cog):
         b.add_item(BoboButton(style=discord.ButtonStyle.secondary, custom_id="big big bobo", label="big big bobo"))
         b.add_item(BoboButton(style=discord.ButtonStyle.danger, custom_id="huge bobo", label="huge bobo"))
         m = await ctx.send(content="get your bobo", view=b)
+        await b.wait()
 
 def setup(bot):
     bot.add_cog(Buttons(bot))
