@@ -170,27 +170,27 @@ class Buttons(commands.Cog):
         await ctx.send('Tic Tac Toe: X goes first', view=v)
         await v.wait()
     
-    @commands.command()
-    @commands.max_concurrency(1, commands.BucketType.channel)
-    async def click(self, ctx):
-        colors = ["blurple", "grey", "green", "red"]
-        random.shuffle(colors)
-        color = random.choice(colors)
-        v = SpeedClickView(color)
-        for i in colors:
-            v.add_item(SpeedClickButton(style=getattr(discord.ButtonStyle, i), label=i, custom_id=i))
-        await ctx.send(f"Click the button that is {color}", view=v)
-        await v.wait()
+#     @commands.command()
+#     @commands.max_concurrency(1, commands.BucketType.channel)
+#     async def click(self, ctx):
+#         colors = ["blurple", "grey", "green", "red"]
+#         random.shuffle(colors)
+#         color = random.choice(colors)
+#         v = SpeedClickView(color)
+#         for i in colors:
+#             v.add_item(SpeedClickButton(style=getattr(discord.ButtonStyle, i), label=i, custom_id=i))
+#         await ctx.send(f"Click the button that is {color}", view=v)
+#         await v.wait()
 
-    @commands.command()
-    @commands.max_concurrency(1, commands.BucketType.channel)
-    async def roo(self, ctx):
-        r = RooView()
-        e = [str(i) for i in self.bot.emojis if i.name.startswith("roo")][:25]
-        for i in e:
-            r.add_item(RooButton(emoji=i, style=discord.ButtonStyle.primary, label="\u200b"))
-        m = await ctx.send(content="get your roo", view=r)
-        await r.wait()
+#     @commands.command()
+#     @commands.max_concurrency(1, commands.BucketType.channel)
+#     async def roo(self, ctx):
+#         r = RooView()
+#         e = [str(i) for i in self.bot.emojis if i.name.startswith("roo")][:25]
+#         for i in e:
+#             r.add_item(RooButton(emoji=i, style=discord.ButtonStyle.primary, label="\u200b"))
+#         m = await ctx.send(content="get your roo", view=r)
+#         await r.wait()
 
     @commands.command()
     @commands.max_concurrency(1, commands.BucketType.channel)
